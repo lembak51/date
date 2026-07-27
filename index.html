@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="uk">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>A Small Question</title>
+<title>Маленьке питання</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -277,6 +277,75 @@
     border-color: var(--purple-2);
   }
 
+  /* Plan options list */
+  .plan-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin: 0.4rem 0 1rem 0;
+  }
+
+  .plan-opt {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #fff;
+    border: 2px solid #eeddf2;
+    border-radius: 14px;
+    padding: 0.65rem 1rem;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: clamp(0.85rem, 3vw, 0.95rem);
+    color: var(--text-dark);
+    min-height: 44px;
+    transition: border-color 0.2s ease, background 0.2s ease, transform 0.15s ease;
+  }
+
+  .plan-opt:active {
+    transform: scale(0.98);
+  }
+
+  .plan-opt-main {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .plan-opt .check {
+    opacity: 0;
+    color: var(--purple-2);
+    font-weight: 700;
+    transition: opacity 0.2s ease;
+  }
+
+  .plan-opt.selected {
+    border-color: var(--purple-2);
+    background: linear-gradient(135deg, #fff0f6, #f3e8ff);
+  }
+
+  .plan-opt.selected .check {
+    opacity: 1;
+  }
+
+  .plan-custom-input {
+    width: 100%;
+    min-height: 48px;
+    border-radius: 14px;
+    border: 2px solid #eeddf2;
+    background: #fff;
+    padding: 0.7rem 1rem;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    color: var(--text-dark);
+    outline: none;
+    margin-top: 0.3rem;
+    transition: border-color 0.2s ease;
+  }
+
+  .plan-custom-input:focus {
+    border-color: var(--purple-2);
+  }
+
   /* Food grid */
   .food-grid {
     display: grid;
@@ -360,72 +429,99 @@
     font-size: clamp(2.5rem, 12vw, 3.5rem);
     margin-bottom: 0.5rem;
   }
+
+  .escape-toast {
+    position: fixed;
+    left: 50%;
+    bottom: clamp(1.5rem, 8vh, 3rem);
+    transform: translateX(-50%);
+    background: linear-gradient(135deg, #ff8fb3, #c084fc);
+    color: #fff;
+    font-weight: 600;
+    font-size: clamp(0.85rem, 3.2vw, 1rem);
+    padding: 0.7rem 1.3rem;
+    border-radius: 999px;
+    box-shadow: 0 12px 28px rgba(140, 80, 160, 0.4);
+    z-index: 200;
+    max-width: 90vw;
+    text-align: center;
+    animation: toastPop 1.8s ease forwards;
+    pointer-events: none;
+  }
+
+  @keyframes toastPop {
+    0% { opacity: 0; transform: translateX(-50%) translateY(10px); }
+    12% { opacity: 1; transform: translateX(-50%) translateY(0); }
+    80% { opacity: 1; transform: translateX(-50%) translateY(0); }
+    100% { opacity: 0; transform: translateX(-50%) translateY(-10px); }
+  }
 </style>
 </head>
 <body>
 
-<div class="brand-header">BUILT WITH ❤️</div>
+<div class="brand-header">ЗРОБЛЕНО З ❤️</div>
 <div id="bg-anim"></div>
 
 <div class="card-wrap">
 
   <!-- STEP 1 -->
   <section class="card active" id="step1">
-    <div class="eyebrow">A Small Question</div>
-    <h1>Will you go on a date with me?</h1>
-    <p class="subtext">Take your time. There is really only one right answer here.</p>
+    <div class="eyebrow">Маленьке питання</div>
+    <h1>Підеш зі мною на побачення?</h1>
+    <p class="subtext">Не поспішай. Тут насправді лише одна правильна відповідь.</p>
     <div class="meme">🥺👉👈</div>
-    <div class="meme-caption">Me waiting for you to press yes</div>
+    <div class="meme-caption">Я чекаю, поки ти натиснеш «так»</div>
     <div class="btn-row" id="btnRow">
-      <button class="btn-yes" id="yesBtn">❤️ Yes, I'd love to</button>
-      <button class="btn-nope" id="nopeBtn">Nope</button>
+      <button class="btn-yes" id="yesBtn">❤️ Так, з радістю</button>
+      <button class="btn-nope" id="nopeBtn">Ні</button>
     </div>
   </section>
 
   <!-- STEP 2 -->
   <section class="card" id="step2">
-    <div class="eyebrow">Step 1 of 3</div>
-    <h2>When works for you?</h2>
-    <p class="subtext">Pick a day and time that feels right.</p>
+    <div class="eyebrow">Крок 1 з 3</div>
+    <h2>Коли тобі зручно?</h2>
+    <p class="subtext">Обери день і час, які підходять.</p>
     <div class="field">
-      <label for="dateInput">Date</label>
+      <label for="dateInput">Дата</label>
       <input type="date" id="dateInput">
     </div>
     <div class="field">
-      <label for="timeInput">Time</label>
+      <label for="timeInput">Час</label>
       <input type="time" id="timeInput">
     </div>
     <div class="field">
-      <label for="planInput">The plan</label>
-      <input type="text" id="planInput" placeholder="Arcade Night">
+      <label>План</label>
+      <div class="plan-grid" id="planGrid"></div>
+      <input type="text" id="planCustomInput" class="plan-custom-input" placeholder="Напиши свій варіант..." style="display:none;">
     </div>
-    <button class="btn-yes btn-full" id="toStep3Btn">Next: the food →</button>
+    <button class="btn-yes btn-full" id="toStep3Btn">Далі: їжа →</button>
   </section>
 
   <!-- STEP 3 -->
   <section class="card" id="step3">
-    <div class="eyebrow">Step 2 of 3</div>
-    <h2>What should we eat?</h2>
-    <p class="subtext">Choose one, no wrong answers.</p>
+    <div class="eyebrow">Крок 2 з 3</div>
+    <h2>Що будемо їсти?</h2>
+    <p class="subtext">Обери одне, неправильних відповідей немає.</p>
     <div class="food-grid" id="foodGrid"></div>
     <div class="btn-nav-row">
-      <button class="btn-secondary" id="backTo2Btn">← Back</button>
-      <button class="btn-yes" id="toStep4Btn">It's a date ❤️</button>
+      <button class="btn-secondary" id="backTo2Btn">← Назад</button>
+      <button class="btn-yes" id="toStep4Btn">Домовились ❤️</button>
     </div>
   </section>
 
   <!-- STEP 4 -->
   <section class="card" id="step4">
     <div class="final-emoji">🌹</div>
-    <h2>It's a date! 🌹</h2>
-    <p class="subtext">Here's what we've got planned:</p>
+    <h2>Домовились! 🌹</h2>
+    <p class="subtext">Ось що ми запланували:</p>
     <div class="summary">
-      <div class="summary-row"><span class="label">Date</span><span class="value" id="sumDate">—</span></div>
-      <div class="summary-row"><span class="label">Time</span><span class="value" id="sumTime">—</span></div>
-      <div class="summary-row"><span class="label">Plan</span><span class="value" id="sumPlan">—</span></div>
-      <div class="summary-row"><span class="label">Food</span><span class="value" id="sumFood">—</span></div>
+      <div class="summary-row"><span class="label">Дата</span><span class="value" id="sumDate">—</span></div>
+      <div class="summary-row"><span class="label">Час</span><span class="value" id="sumTime">—</span></div>
+      <div class="summary-row"><span class="label">План</span><span class="value" id="sumPlan">—</span></div>
+      <div class="summary-row"><span class="label">Їжа</span><span class="value" id="sumFood">—</span></div>
     </div>
-    <p class="subtext">Can't wait. 💌</p>
+    <p class="subtext">Не можу дочекатись. 💌</p>
   </section>
 
 </div>
@@ -498,33 +594,31 @@
 
   // ====== "NOPE" BUTTON ESCAPE LOGIC ======
   const nopeBtn = document.getElementById('nopeBtn');
-  const card1 = document.getElementById('step1');
 
   function isMobileLike() {
     return window.matchMedia('(hover: none)').matches || window.innerWidth <= 480;
   }
 
-  function getBounds() {
-    if (isMobileLike()) {
-      const pad = 16;
-      return {
-        left: pad,
-        top: pad,
-        width: window.innerWidth - pad * 2,
-        height: window.innerHeight - pad * 2,
-      };
+  // Runs around the whole page (viewport), not just inside the card —
+  // it must first be freed from the card's overflow:hidden clipping.
+  function freeNopeButton() {
+    if (nopeBtn.parentElement !== document.body) {
+      document.body.appendChild(nopeBtn);
     }
-    const rect = card1.getBoundingClientRect();
-    const pad = 12;
+  }
+
+  function getBounds() {
+    const pad = 16;
     return {
-      left: rect.left + pad,
-      top: rect.top + pad,
-      width: rect.width - pad * 2,
-      height: rect.height - pad * 2,
+      left: pad,
+      top: pad,
+      width: window.innerWidth - pad * 2,
+      height: window.innerHeight - pad * 2,
     };
   }
 
   function moveNopeButton() {
+    freeNopeButton();
     const bounds = getBounds();
     const btnW = nopeBtn.offsetWidth || 100;
     const btnH = nopeBtn.offsetHeight || 48;
@@ -545,7 +639,7 @@
     const cx = rect.left + rect.width / 2;
     const cy = rect.top + rect.height / 2;
     const dist = Math.hypot(e.clientX - cx, e.clientY - cy);
-    if (dist < 80) {
+    if (dist < 90) {
       moveNopeButton();
     }
   });
@@ -558,10 +652,28 @@
   nopeBtn.addEventListener('mousedown', moveNopeButton);
   nopeBtn.addEventListener('touchstart', moveNopeButton, { passive: true });
 
-  // In the rare case a real click still lands, log it and stay put
+  // In the rare case a real click still lands (usually via keyboard),
+  // just tease and jump away — no message sent anywhere.
+  const escapeTaunts = [
+    'Ні-ні, так просто не втече! 😏',
+    'Гарна спроба, але ні 😌',
+    'Ця кнопка тренована втікати 🏃‍♀️',
+    'Ти справді думала, що вийде? 😜',
+    'Клавіатура не рахується! 🙈',
+    'Спробуй ще раз, я не здаюсь 💅',
+  ];
+
+  function showEscapeToast() {
+    const toast = document.createElement('div');
+    toast.className = 'escape-toast';
+    toast.textContent = escapeTaunts[Math.floor(Math.random() * escapeTaunts.length)];
+    document.body.appendChild(toast);
+    setTimeout(() => toast.remove(), 1800);
+  }
+
   nopeBtn.addEventListener('click', () => {
-    sendToTelegram('😢 Натиснула Nope');
     moveNopeButton();
+    showEscapeToast();
   });
 
   window.addEventListener('resize', () => {
@@ -570,8 +682,46 @@
 
   // ====== STEP 1 -> 2 ======
   document.getElementById('yesBtn').addEventListener('click', () => {
+    nopeBtn.style.display = 'none';
     goToStep(2);
   });
+
+  // ====== PLAN OPTIONS ======
+  const planOptions = [
+    { label: 'Аркадна зала', emoji: '🕹️' },
+    { label: 'Затишна кава', emoji: '☕' },
+    { label: 'Прогулянка на заході сонця', emoji: '🌅' },
+    { label: 'Вечеря і кіно', emoji: '🎬' },
+    { label: 'Міні-гольф', emoji: '⛳' },
+    { label: 'Прогулянка книгарнями', emoji: '📚' },
+    { label: 'Здивуй мене', emoji: '✨' },
+    { label: 'Свій варіант', emoji: '✏️', custom: true },
+  ];
+
+  let selectedPlan = null;
+  let planIsCustom = false;
+  const planGrid = document.getElementById('planGrid');
+  const planCustomInput = document.getElementById('planCustomInput');
+
+  planOptions.forEach(opt => {
+    const div = document.createElement('div');
+    div.className = 'plan-opt';
+    div.innerHTML = `<span class="plan-opt-main"><span class="emoji">${opt.emoji}</span><span>${opt.label}</span></span><span class="check">✓</span>`;
+    div.addEventListener('click', () => {
+      document.querySelectorAll('.plan-opt').forEach(el => el.classList.remove('selected'));
+      div.classList.add('selected');
+      planIsCustom = !!opt.custom;
+      selectedPlan = opt.custom ? null : opt.label;
+      planCustomInput.style.display = opt.custom ? 'block' : 'none';
+      if (opt.custom) planCustomInput.focus();
+    });
+    planGrid.appendChild(div);
+  });
+
+  function getPlanValue() {
+    if (planIsCustom) return planCustomInput.value.trim() || 'Свій варіант';
+    return selectedPlan;
+  }
 
   // ====== STEP 2 -> 3 ======
   document.getElementById('toStep3Btn').addEventListener('click', () => {
@@ -579,20 +729,21 @@
     const timeInput = document.getElementById('timeInput');
     if (!dateInput.value) { dateInput.focus(); return; }
     if (!timeInput.value) { timeInput.focus(); return; }
+    if (!selectedPlan && !(planIsCustom && planCustomInput.value.trim())) { return; }
     goToStep(3);
   });
 
   // ====== FOOD GRID ======
   const foodOptions = [
-    { label: 'Italian', emoji: '🍝' },
-    { label: 'Sushi', emoji: '🍣' },
-    { label: 'Pizza', emoji: '🍕' },
-    { label: 'Tacos', emoji: '🌮' },
-    { label: 'Burgers', emoji: '🍔' },
-    { label: 'Ramen', emoji: '🍜' },
-    { label: 'Brunch', emoji: '🥐' },
-    { label: 'Dessert First', emoji: '🍰' },
-    { label: 'You Pick', emoji: '🎲' },
+    { label: 'Італійська', emoji: '🍝' },
+    { label: 'Суші', emoji: '🍣' },
+    { label: 'Піца', emoji: '🍕' },
+    { label: 'Тако', emoji: '🌮' },
+    { label: 'Бургери', emoji: '🍔' },
+    { label: 'Рамен', emoji: '🍜' },
+    { label: 'Бранч', emoji: '🥐' },
+    { label: 'Спочатку десерт', emoji: '🍰' },
+    { label: 'Ти обираєш', emoji: '🎲' },
   ];
 
   let selectedFood = null;
@@ -620,7 +771,7 @@
 
     const dateInput = document.getElementById('dateInput').value;
     const timeInput = document.getElementById('timeInput').value;
-    const planInput = document.getElementById('planInput').value || '—';
+    const planInput = getPlanValue() || '—';
 
     let formattedDate = dateInput;
     if (dateInput) {
@@ -639,7 +790,7 @@
     const message =
 `💌 Нова відповідь на побачення!
 
-Відповідь: Yes ❤️
+Відповідь: Так ❤️
 Дата: ${formattedDate || '—'}
 Час: ${timeInput || '—'}
 План: ${planInput}
