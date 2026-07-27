@@ -284,6 +284,30 @@
     border-color: var(--purple-2);
   }
 
+  /* iOS Safari gives native date/time controls an intrinsic width that
+     ignores width:100% and pushes them past the card edge. Stripping the
+     native appearance is what actually lets them shrink. */
+  .field input[type="date"],
+  .field input[type="time"] {
+    -webkit-appearance: none;
+    appearance: none;
+    min-width: 0;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .field input[type="date"]::-webkit-date-and-time-value,
+  .field input[type="time"]::-webkit-date-and-time-value {
+    text-align: left;
+    min-width: 0;
+    margin: 0;
+  }
+
+  .field input::-webkit-calendar-picker-indicator {
+    margin-left: 0;
+    flex-shrink: 0;
+  }
+
   /* Plan options list */
   .plan-grid {
     display: flex;
