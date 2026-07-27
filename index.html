@@ -103,12 +103,16 @@
     position: relative;
     z-index: 5;
     width: min(440px, 92vw);
+    max-width: 92vw;
     margin-top: 2.5rem;
+    overflow-x: hidden;
   }
 
   .card {
     position: relative;
     width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
     background: var(--card-bg);
     backdrop-filter: blur(10px);
     border-radius: 28px;
@@ -260,14 +264,17 @@
   }
 
   .field input {
+    display: block;
     width: 100%;
+    max-width: 100%;
+    min-width: 0;
     min-height: 48px;
     border-radius: 14px;
     border: 2px solid #eeddf2;
     background: #fff;
-    padding: 0.7rem 1rem;
+    padding: 0.7rem 0.9rem;
     font-family: 'Poppins', sans-serif;
-    font-size: 1rem;
+    font-size: clamp(0.85rem, 3.6vw, 1rem);
     color: var(--text-dark);
     outline: none;
     transition: border-color 0.2s ease;
@@ -289,6 +296,8 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: 0.5rem;
+    min-width: 0;
     background: #fff;
     border: 2px solid #eeddf2;
     border-radius: 14px;
@@ -309,6 +318,9 @@
     display: flex;
     align-items: center;
     gap: 0.6rem;
+    min-width: 0;
+    overflow-wrap: break-word;
+    word-break: break-word;
   }
 
   .plan-opt .check {
@@ -617,6 +629,8 @@
     };
   }
 
+  const yesBtn = document.getElementById('yesBtn');
+
   function moveNopeButton() {
     freeNopeButton();
     const bounds = getBounds();
@@ -624,8 +638,22 @@
     const btnH = nopeBtn.offsetHeight || 48;
     const maxX = Math.max(bounds.left, bounds.left + bounds.width - btnW);
     const maxY = Math.max(bounds.top, bounds.top + bounds.height - btnH);
-    const newX = bounds.left + Math.random() * (maxX - bounds.left);
-    const newY = bounds.top + Math.random() * (maxY - bounds.top);
+
+    // Never land on top of the Yes button — that's how a dodge could
+    // accidentally reveal Yes underneath and register as a tap on it.
+    const margin = 20;
+    const yesRect = yesBtn.getBoundingClientRect();
+    let newX, newY, attempts = 0;
+    do {
+      newX = bounds.left + Math.random() * (maxX - bounds.left);
+      newY = bounds.top + Math.random() * (maxY - bounds.top);
+      attempts++;
+    } while (
+      attempts < 15 &&
+      newX < yesRect.right + margin && newX + btnW > yesRect.left - margin &&
+      newY < yesRect.bottom + margin && newY + btnH > yesRect.top - margin
+    );
+
     nopeBtn.classList.add('escaped');
     nopeBtn.style.left = newX + 'px';
     nopeBtn.style.top = newY + 'px';
