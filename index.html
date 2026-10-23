@@ -158,6 +158,17 @@
     line-height: 1.5;
   }
 
+  /* Text that fades in a moment after the card appears */
+  .subtext.delayed {
+    opacity: 0;
+    animation: revealLater 0.8s ease 2.5s forwards;
+  }
+
+  @keyframes revealLater {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
   .meme {
     font-size: clamp(3rem, 15vw, 4.5rem);
     text-align: center;
@@ -367,12 +378,6 @@
     font-size: 0.85rem;
     color: var(--purple-2);
     margin: -0.5rem 0 0.5rem 0.2rem;
-    opacity: 0;
-    transition: opacity 0.6s ease;
-  }
-
-  .plan-note.visible {
-    opacity: 1;
   }
 
   .plan-custom-input {
@@ -516,7 +521,7 @@
   <section class="card active" id="step1">
     <div class="eyebrow">Маленьке питання</div>
     <h1>Підеш зі мною на побачення?</h1>
-    <p class="subtext">Не поспішай. Тут насправді лише одна правильна відповідь.</p>
+    <p class="subtext delayed">Не поспішай. Тут насправді лише одна правильна відповідь.</p>
     <div class="meme">🥺👉👈</div>
     <div class="meme-caption">Я чекаю, поки ти натиснеш «так»</div>
     <div class="btn-row" id="btnRow">
@@ -766,7 +771,6 @@
   const planGrid = document.getElementById('planGrid');
   const planCustomInput = document.getElementById('planCustomInput');
   const planNote = document.getElementById('planNote');
-  let planNoteTimer = null;
 
   planOptions.forEach(opt => {
     const div = document.createElement('div');
@@ -778,12 +782,8 @@
       planIsCustom = !!opt.custom;
       selectedPlan = opt.custom ? null : opt.label;
       planCustomInput.style.display = opt.custom ? 'block' : 'none';
-      // Reveal the note with a short delay so it doesn't pop up instantly
-      clearTimeout(planNoteTimer);
-      planNote.classList.remove('visible');
       planNote.textContent = opt.note || '';
       planNote.style.display = opt.note ? 'block' : 'none';
-      if (opt.note) planNoteTimer = setTimeout(() => planNote.classList.add('visible'), 1000);
       if (opt.custom) planCustomInput.focus();
     });
     planGrid.appendChild(div);
