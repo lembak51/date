@@ -367,6 +367,12 @@
     font-size: 0.85rem;
     color: var(--purple-2);
     margin: -0.5rem 0 0.5rem 0.2rem;
+    opacity: 0;
+    transition: opacity 0.6s ease;
+  }
+
+  .plan-note.visible {
+    opacity: 1;
   }
 
   .plan-custom-input {
@@ -760,6 +766,7 @@
   const planGrid = document.getElementById('planGrid');
   const planCustomInput = document.getElementById('planCustomInput');
   const planNote = document.getElementById('planNote');
+  let planNoteTimer = null;
 
   planOptions.forEach(opt => {
     const div = document.createElement('div');
@@ -771,8 +778,12 @@
       planIsCustom = !!opt.custom;
       selectedPlan = opt.custom ? null : opt.label;
       planCustomInput.style.display = opt.custom ? 'block' : 'none';
+      // Reveal the note with a short delay so it doesn't pop up instantly
+      clearTimeout(planNoteTimer);
+      planNote.classList.remove('visible');
       planNote.textContent = opt.note || '';
       planNote.style.display = opt.note ? 'block' : 'none';
+      if (opt.note) planNoteTimer = setTimeout(() => planNote.classList.add('visible'), 1000);
       if (opt.custom) planCustomInput.focus();
     });
     planGrid.appendChild(div);
