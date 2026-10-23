@@ -363,6 +363,12 @@
     opacity: 1;
   }
 
+  .plan-note {
+    font-size: 0.85rem;
+    color: var(--purple-2);
+    margin: -0.5rem 0 0.5rem 0.2rem;
+  }
+
   .plan-custom-input {
     width: 100%;
     min-height: 48px;
@@ -529,6 +535,7 @@
     <div class="field">
       <label>План</label>
       <div class="plan-grid" id="planGrid"></div>
+      <p class="plan-note" id="planNote" style="display:none;"></p>
       <input type="text" id="planCustomInput" class="plan-custom-input" placeholder="Напиши свій варіант..." style="display:none;">
     </div>
     <button class="btn-yes btn-full" id="toStep3Btn">Далі: їжа →</button>
@@ -744,7 +751,7 @@
     { label: 'Прогулянка на заході сонця', emoji: '🌅' },
     { label: 'Вечеря і кіно', emoji: '🎬' },
     { label: 'Ботанічний сад', emoji: '🌿' },
-    { label: 'Здивуй мене', emoji: '✨' },
+    { label: 'Здивуй мене', emoji: '✨', note: '✨ Дата чи час можуть трохи змінитись, щоб сюрприз вдався 😉' },
     { label: 'Свій варіант', emoji: '✏️', custom: true },
   ];
 
@@ -752,6 +759,7 @@
   let planIsCustom = false;
   const planGrid = document.getElementById('planGrid');
   const planCustomInput = document.getElementById('planCustomInput');
+  const planNote = document.getElementById('planNote');
 
   planOptions.forEach(opt => {
     const div = document.createElement('div');
@@ -763,6 +771,8 @@
       planIsCustom = !!opt.custom;
       selectedPlan = opt.custom ? null : opt.label;
       planCustomInput.style.display = opt.custom ? 'block' : 'none';
+      planNote.textContent = opt.note || '';
+      planNote.style.display = opt.note ? 'block' : 'none';
       if (opt.custom) planCustomInput.focus();
     });
     planGrid.appendChild(div);
